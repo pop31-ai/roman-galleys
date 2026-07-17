@@ -11,6 +11,12 @@ import os, math
 W, H = A4
 OUT = os.path.dirname(os.path.abspath(__file__))
 
+FONT_DIR = os.path.join(os.environ.get("WINDIR", r"C:\Windows"), "Fonts")
+pdfmetrics.registerFont(TTFont("Arial", os.path.join(FONT_DIR, "arial.ttf")))
+pdfmetrics.registerFont(TTFont("Arial-Bold", os.path.join(FONT_DIR, "arialbd.ttf")))
+pdfmetrics.registerFont(TTFont("Arial-Oblique", os.path.join(FONT_DIR, "ariali.ttf")))
+pdfmetrics.registerFont(TTFont("Arial-BoldOblique", os.path.join(FONT_DIR, "arialbi.ttf")))
+
 GOLD = HexColor("#c9a84c")
 DARK = HexColor("#1a1a2e")
 BROWN = HexColor("#5D4037")
@@ -130,7 +136,7 @@ def draw_page_bg(c, color=CREAM):
     c.rect(0, 0, W, H, fill=1, stroke=0)
 
 def draw_text_block(c, text, x, y, size=11, color=DARK, max_width=150*mm, leading=16):
-    style = ParagraphStyle('body', fontName='Helvetica', fontSize=size, leading=leading, textColor=color)
+    style = ParagraphStyle('body', fontName='Arial', fontSize=size, leading=leading, textColor=color)
     p = Paragraph(text, style)
     w2, h2 = p.wrap(max_width, 500*mm)
     p.drawOn(c, x, y - h2)
@@ -141,12 +147,12 @@ def draw_chapter_title(c, num, title, subtitle=""):
     draw_border(c, GOLD, 4)
     draw_corner_ornaments(c, GOLD)
     c.setFillColor(GOLD)
-    c.setFont("Helvetica-Bold", 60)
+    c.setFont("Arial-Bold", 60)
     c.drawCentredString(W/2, H-80*mm, str(num))
-    c.setFont("Helvetica-Bold", 28)
+    c.setFont("Arial-Bold", 28)
     c.drawCentredString(W/2, H-100*mm, title)
     if subtitle:
-        c.setFont("Helvetica", 14)
+        c.setFont("Arial", 14)
         c.setFillColor(CREAM)
         c.drawCentredString(W/2, H-115*mm, subtitle)
     draw_divider(c, H-125*mm, GOLD)
@@ -161,7 +167,7 @@ def text_page(c, chapter_num, chapter_title, subtitle, paragraphs, page_illustra
         draw_corner_ornaments(c, GOLD)
 
         c.setFillColor(DARK)
-        c.setFont("Helvetica-Bold", 16)
+        c.setFont("Arial-Bold", 16)
         c.drawString(25*mm, H-30*mm, title)
         draw_divider(c, H-36*mm, GOLD)
 
@@ -173,7 +179,7 @@ def text_page(c, chapter_num, chapter_title, subtitle, paragraphs, page_illustra
         if page_illustration:
             page_illustration(c, W/2, y - 30*mm)
 
-        c.setFont("Helvetica-Oblique", 9)
+        c.setFont("Arial-Oblique", 9)
         c.setFillColor(GRAY)
         c.drawCentredString(W/2, 22*mm, f"Римские Галеры — Том {chapter_num} — Стр. {i+2}")
 
@@ -191,23 +197,23 @@ def generate_tome1():
     draw_corner_ornaments(c, GOLD)
 
     c.setFillColor(GOLD)
-    c.setFont("Helvetica-Bold", 14)
+    c.setFont("Arial-Bold", 14)
     c.drawCentredString(W/2, H-40*mm, "ТОМ I")
 
-    c.setFont("Helvetica-Bold", 36)
+    c.setFont("Arial-Bold", 36)
     c.drawCentredString(W/2, H-65*mm, "ВЕЛИЧИЕ")
     c.drawCentredString(W/2, H-82*mm, "ИМПЕРИИ")
 
     draw_divider(c, H-95*mm, GOLD)
 
-    c.setFont("Helvetica", 14)
+    c.setFont("Arial", 14)
     c.setFillColor(CREAM)
     c.drawCentredString(W/2, H-108*mm, "Полное руководство по игре")
     c.drawCentredString(W/2, H-118*mm, "Римские Галеры")
 
     draw_boat(c, W/2, H-145*mm, 80, 30)
 
-    c.setFont("Helvetica-Oblique", 10)
+    c.setFont("Arial-Oblique", 10)
     c.setFillColor(GRAY)
     c.drawCentredString(W/2, 40*mm, "Издание первое, допущенное Сенатом Римской Республики")
     c.drawCentredString(W/2, 33*mm, "Anno Domini MMXXVI")
@@ -220,7 +226,7 @@ def generate_tome1():
     draw_corner_ornaments(c, GOLD)
 
     c.setFillColor(DARK)
-    c.setFont("Helvetica-Bold", 24)
+    c.setFont("Arial-Bold", 24)
     c.drawCentredString(W/2, H-35*mm, "СОДЕРЖАНИЕ")
 
     draw_divider(c, H-42*mm, GOLD)
@@ -237,10 +243,10 @@ def generate_tome1():
     y = H - 55*mm
     for num, title in toc:
         c.setFillColor(BROWN)
-        c.setFont("Helvetica-Bold", 13)
+        c.setFont("Arial-Bold", 13)
         c.drawString(30*mm, y, num)
         c.setFillColor(DARK)
-        c.setFont("Helvetica", 13)
+        c.setFont("Arial", 13)
         c.drawString(45*mm, y, title)
         y -= 10*mm
 
@@ -402,16 +408,16 @@ def generate_tome2():
     draw_corner_ornaments(c, GOLD)
 
     c.setFillColor(GOLD)
-    c.setFont("Helvetica-Bold", 14)
+    c.setFont("Arial-Bold", 14)
     c.drawCentredString(W/2, H-40*mm, "ТОМ II")
 
-    c.setFont("Helvetica-Bold", 36)
+    c.setFont("Arial-Bold", 36)
     c.drawCentredString(W/2, H-65*mm, "ЗЕМЛИ")
     c.drawCentredString(W/2, H-82*mm, "ИМПЕРИИ")
 
     draw_divider(c, H-95*mm, GOLD)
 
-    c.setFont("Helvetica", 14)
+    c.setFont("Arial", 14)
     c.setFillColor(CREAM)
     c.drawCentredString(W/2, H-108*mm, "Гид по уровням и берегам")
 
@@ -419,7 +425,7 @@ def generate_tome2():
     draw_birch(c, W/2+40, H-145*mm, 30)
     draw_fortress_wall(c, W/2-30, H-165*mm, 60, 30)
 
-    c.setFont("Helvetica-Oblique", 10)
+    c.setFont("Arial-Oblique", 10)
     c.setFillColor(GRAY)
     c.drawCentredString(W/2, 40*mm, "Издание второе, дополненное")
 
@@ -431,7 +437,7 @@ def generate_tome2():
     draw_corner_ornaments(c, GOLD)
 
     c.setFillColor(DARK)
-    c.setFont("Helvetica-Bold", 24)
+    c.setFont("Arial-Bold", 24)
     c.drawCentredString(W/2, H-35*mm, "СОДЕРЖАНИЕ")
 
     draw_divider(c, H-42*mm, GOLD)
@@ -449,10 +455,10 @@ def generate_tome2():
     y = H - 55*mm
     for num, title in toc:
         c.setFillColor(BROWN)
-        c.setFont("Helvetica-Bold", 12)
+        c.setFont("Arial-Bold", 12)
         c.drawString(30*mm, y, num)
         c.setFillColor(DARK)
-        c.setFont("Helvetica", 12)
+        c.setFont("Arial", 12)
         c.drawString(45*mm, y, title)
         y -= 9*mm
 
@@ -693,22 +699,22 @@ def generate_tome3():
     draw_corner_ornaments(c, GOLD)
 
     c.setFillColor(GOLD)
-    c.setFont("Helvetica-Bold", 14)
+    c.setFont("Arial-Bold", 14)
     c.drawCentredString(W/2, H-40*mm, "ТОМ III")
 
-    c.setFont("Helvetica-Bold", 36)
+    c.setFont("Arial-Bold", 36)
     c.drawCentredString(W/2, H-65*mm, "КНИГА")
     c.drawCentredString(W/2, H-82*mm, "СУДЕБ")
 
     draw_divider(c, H-95*mm, GOLD)
 
-    c.setFont("Helvetica", 14)
+    c.setFont("Arial", 14)
     c.setFillColor(CREAM)
     c.drawCentredString(W/2, H-108*mm, "Персонажи, глоссарий и мудрости")
 
     draw_roman_face(c, W/2, H-145*mm, 25)
 
-    c.setFont("Helvetica-Oblique", 10)
+    c.setFont("Arial-Oblique", 10)
     c.setFillColor(GRAY)
     c.drawCentredString(W/2, 40*mm, "Издание третье, окончательное")
 
@@ -720,7 +726,7 @@ def generate_tome3():
     draw_corner_ornaments(c, GOLD)
 
     c.setFillColor(DARK)
-    c.setFont("Helvetica-Bold", 24)
+    c.setFont("Arial-Bold", 24)
     c.drawCentredString(W/2, H-35*mm, "СОДЕРЖАНИЕ")
 
     draw_divider(c, H-42*mm, GOLD)
@@ -737,10 +743,10 @@ def generate_tome3():
     y = H - 55*mm
     for num, title in toc:
         c.setFillColor(BROWN)
-        c.setFont("Helvetica-Bold", 12)
+        c.setFont("Arial-Bold", 12)
         c.drawString(30*mm, y, num)
         c.setFillColor(DARK)
-        c.setFont("Helvetica", 12)
+        c.setFont("Arial", 12)
         c.drawString(45*mm, y, title)
         y -= 9*mm
 
