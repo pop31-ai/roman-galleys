@@ -1,11 +1,15 @@
-# Римские Галеры
+# Roman Galleys / Римские Галеры / Galeras Romanas
+
+Arcade game where you pilot a Roman galley through rivers and seas of the ancient world. Dodge rocks, collect gold, and ram enemy ships!
 
 Аркадная игра, где вы управляете римской галерой по рекам и морям древнего мира. Уклоняйтесь от камней, собирайте золото и тараните вражеские корабли!
 
-## Как играть
+Juego de arcade donde piloteas una galera romana por rios y mares del mundo antiguo. Esquiva rocas, recoge oro y embeste barcos enemigos!
 
-- **A/D** или **стрелки** — движение
-- **Пробел** — таран (перезарядка ~1 сек)
+## How to Play / Как играть / Como Jugar
+
+- **A/D** or **arrows** / **стрелки** / **flechas** — movement
+- **Space** / **Пробел** / **Espacio** — ram (cooldown ~1s)
 
 ## Уровни
 
@@ -61,17 +65,35 @@ python test_levels_cv.py
 - Детектит объекты по HSV-цветам (лодки, камни, монеты)
 - Генерирует debug-изображения и JSON-отчёт
 
-## Книга (3 тома)
+## Illustrated Book / Книга / Libro (9 PDFs, 3 languages)
 
-Игра сопровождается иллюстрированной книгой в формате PDF:
+The game comes with illustrated PDF books in 3 languages: Russian, English, Spanish.
 
-| Том | Файл | Содержание |
-|-----|------|------------|
-| I | `Tome_1_Velichie_Imperii.pdf` | Введение, управление, мир игры, очки, таран, препятствия, запуск |
-| II | `Tome_2_Zemli_Imperii.pdf` | Все 7 уровней + каталог декораций |
-| III | `Tome_3_Kniga_Sudeb.pdf` | Персонажи, судьбы, глоссарий, латынь, стратегии, достижения |
+### Russian / Русский
 
-Генерация:
+| Tome | File | Contents |
+|------|------|----------|
+| I | `Tome_1_Velichie_Imperii.pdf` | Introduction, controls, world, scoring, ram, obstacles, launch |
+| II | `Tome_2_Zemli_Imperii.pdf` | All 7 levels + decoration catalog |
+| III | `Tome_3_Kniga_Sudeb.pdf` | Characters, fates, glossary, Latin, strategies, achievements |
+
+### English
+
+| Tome | File | Contents |
+|------|------|----------|
+| I | `Tome_1_Glory_of_Empire.pdf` | Introduction, controls, world, scoring, ram, obstacles, launch |
+| II | `Tome_2_Lands_of_Empire.pdf` | All 7 levels + decoration catalog |
+| III | `Tome_3_Book_of_Fates.pdf` | Characters, fates, glossary, Latin, strategies, achievements |
+
+### Spanish / Espanol
+
+| Tome | File | Contents |
+|------|------|----------|
+| I | `Tome_1_Gloria_del_Imperio.pdf` | Introduccion, controles, mundo, puntuacion, ariete, obstaculos |
+| II | `Tome_2_Tierras_del_Imperio.pdf` | Todos los 7 niveles + catalogo de decoraciones |
+| III | `Tome_3_Libro_de_Destinos.pdf` | Personajes, destinos, glosario, latin, estrategias, logros |
+
+Generation:
 
 ```bash
 pip install reportlab
