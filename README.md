@@ -100,6 +100,30 @@ pip install reportlab
 python generate_book.py
 ```
 
+## Visual Game Guide / Визуальный гид (3 PDFs)
+
+Detailed annotated illustrations of every game element, gameplay situations, and level previews:
+
+| Language | File | Pages |
+|----------|------|-------|
+| RU | `Game_Art_RU.pdf` | Boat anatomy, HUD, obstacles, coins, characters, all 7 levels, ramming/dodging/collecting/damage |
+| EN | `Game_Art_EN.pdf` | Same content in English |
+| ES | `Game_Art_ES.pdf` | Same content in Spanish |
+
+Each page includes:
+- Game-accurate element drawings (exact colors from HTML5 Canvas code)
+- Labeled callout annotations (hex colors, dimensions, frame counts)
+- Full game scene mockups per level with water colors and decorations
+- Gameplay situation diagrams (ramming, dodging, collecting, damage)
+- All 6 character types with feature labels
+- HUD element breakdown (health, ram cooldown, score, progress bar)
+
+Generation:
+
+```bash
+python generate_game_art.py
+```
+
 ## Стек
 
 - HTML5 Canvas
