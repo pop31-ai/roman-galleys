@@ -1,6 +1,6 @@
 ﻿from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm, cm
-from reportlab.lib.colors import HexColor, white, black
+from reportlab.lib.colors import HexColor, white, black, Color
 from reportlab.pdfgen import canvas
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Paragraph
@@ -268,133 +268,325 @@ def draw_waves(c, x, y, w=80):
         for k in range(len(pts)-1):
             c.line(pts[k][0], pts[k][1], pts[k+1][0], pts[k+1][1])
 
+def _draw_label_small(c, text, x, y, size=7, color=DARK):
+    c.setFillColor(color)
+    c.setFont("Arial", size)
+    c.drawString(x, y, text)
+
 def draw_scene_sea(c, x, y):
-    draw_waves(c, x, y+20, 100)
-    draw_boat(c, x-20, y+25, 45, 18, GREEN)
-    draw_rock(c, x+30, y+5, 10)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#0e6655"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(Color(0.2, 0.6, 0.86, 0.25))
+    c.setLineWidth(1.5)
+    for row in range(int(bh/12)+1):
+        yy = by + row*12
+        for j in range(int(bw/8)):
+            c.line(bx+j*8, yy+2*math.sin(j*0.7), bx+(j+1)*8, yy+2*math.sin((j+1)*0.7))
+    draw_boat(c, x-20, y+2, 45, 18, GREEN)
+    draw_rock(c, x+30, y-15, 12)
+    draw_coin(c, x+50, y+12, 7)
+    _draw_label_small(c, "Mare Nostrum", bx+3, by+bh-8, 7, CREAM)
+    _draw_label_small(c, "Lv.1", bx+bw-18, by+bh-8, 7, GOLD)
 
 def draw_scene_tiber(c, x, y):
-    draw_tree(c, x-35, y-5, 30)
-    draw_tree(c, x+30, y-5, 25)
-    draw_waves(c, x, y+20, 100)
-    draw_boat(c, x, y+25, 45, 18, BROWN)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#1a5276"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(Color(0.2, 0.6, 0.86, 0.25))
+    c.setLineWidth(1.5)
+    for row in range(int(bh/12)+1):
+        yy = by + row*12
+        for j in range(int(bw/8)):
+            c.line(bx+j*8, yy+2*math.sin(j*0.7), bx+(j+1)*8, yy+2*math.sin((j+1)*0.7))
+    draw_tree(c, bx+10, by+2, 25)
+    draw_tree(c, bx+bw-25, by+2, 20)
+    draw_boat(c, x, y+2, 45, 18, BROWN)
+    _draw_label_small(c, "Tiberis", bx+3, by+bh-8, 7, CREAM)
+    _draw_label_small(c, "Lv.2", bx+bw-18, by+bh-8, 7, GOLD)
 
 def draw_scene_harbor(c, x, y):
-    draw_barrel(c, x-25, y+5, 8)
-    draw_barrel(c, x-15, y+5, 8)
-    draw_barrel(c, x+20, y+5, 8)
-    draw_waves(c, x, y+20, 100)
-    draw_boat(c, x+5, y+25, 45, 18, HexColor("#D2B48C"))
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#1b4f72"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(Color(0.2, 0.6, 0.86, 0.25))
+    c.setLineWidth(1.5)
+    for row in range(int(bh/12)+1):
+        yy = by + row*12
+        for j in range(int(bw/8)):
+            c.line(bx+j*8, yy+2*math.sin(j*0.7), bx+(j+1)*8, yy+2*math.sin((j+1)*0.7))
+    draw_barrel(c, bx+15, by+5, 7)
+    draw_barrel(c, bx+30, by+5, 7)
+    draw_barrel(c, bx+bw-20, by+5, 7)
+    draw_boat(c, x+5, y+2, 45, 18, HexColor("#D2B48C"))
+    _draw_label_small(c, "Portus Ostia", bx+3, by+bh-8, 7, CREAM)
+    _draw_label_small(c, "Lv.3", bx+bw-18, by+bh-8, 7, GOLD)
 
 def draw_scene_fortress(c, x, y):
-    draw_fortress_wall(c, x-35, y-5, 70, 35)
-    draw_flag(c, x+20, y+30, 20, RED)
-    draw_waves(c, x, y+20, 100)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#154360"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(Color(0.2, 0.6, 0.86, 0.25))
+    c.setLineWidth(1.5)
+    for row in range(int(bh/12)+1):
+        yy = by + row*12
+        for j in range(int(bw/8)):
+            c.line(bx+j*8, yy+2*math.sin(j*0.7), bx+(j+1)*8, yy+2*math.sin((j+1)*0.7))
+    draw_fortress_wall(c, bx+5, by+2, 45, 28)
+    draw_flag(c, bx+bw-30, by+10, 20, RED)
+    draw_boat(c, x, y+2, 45, 18, GREEN)
+    _draw_label_small(c, "Castra Roma", bx+3, by+bh-8, 7, CREAM)
+    _draw_label_small(c, "Lv.4", bx+bw-18, by+bh-8, 7, GOLD)
 
 def draw_scene_egypt(c, x, y):
-    draw_pyramid(c, x-25, y-10, 25)
-    draw_pyramid(c, x+20, y-15, 18)
-    draw_palm(c, x+40, y-5, 25)
-    draw_waves(c, x, y+20, 100)
-    draw_boat(c, x-5, y+25, 45, 18, SAND)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#1a5276"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(Color(0.2, 0.6, 0.86, 0.25))
+    c.setLineWidth(1.5)
+    for row in range(int(bh/12)+1):
+        yy = by + row*12
+        for j in range(int(bw/8)):
+            c.line(bx+j*8, yy+2*math.sin(j*0.7), bx+(j+1)*8, yy+2*math.sin((j+1)*0.7))
+    draw_pyramid(c, bx+15, by-2, 22)
+    draw_pyramid(c, bx+50, by-5, 16)
+    draw_boat(c, x-5, y+2, 45, 18, SAND)
+    _draw_label_small(c, "Aegyptus", bx+3, by+bh-8, 7, CREAM)
+    _draw_label_small(c, "Lv.5", bx+bw-18, by+bh-8, 7, GOLD)
 
 def draw_scene_rus(c, x, y):
-    draw_birch(c, x-30, y-5, 30)
-    draw_birch(c, x+25, y-5, 25)
-    draw_waves(c, x, y+20, 100)
-    draw_boat(c, x, y+25, 45, 18, BROWN)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#1b4f72"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(Color(0.2, 0.6, 0.86, 0.25))
+    c.setLineWidth(1.5)
+    for row in range(int(bh/12)+1):
+        yy = by + row*12
+        for j in range(int(bw/8)):
+            c.line(bx+j*8, yy+2*math.sin(j*0.7), bx+(j+1)*8, yy+2*math.sin((j+1)*0.7))
+    draw_birch(c, bx+10, by+2, 25)
+    draw_birch(c, bx+40, by+2, 20)
+    draw_boat(c, x, y+2, 45, 18, BROWN)
+    _draw_label_small(c, "Rus Antiqua", bx+3, by+bh-8, 7, CREAM)
+    _draw_label_small(c, "Lv.6", bx+bw-18, by+bh-8, 7, GOLD)
 
 def draw_scene_battle(c, x, y):
-    draw_boat(c, x-25, y+25, 40, 16, GREEN)
-    draw_enemy_ship(c, x+25, y+25, 35, 14)
-    draw_rock(c, x, y+5, 12)
-    draw_waves(c, x, y+20, 100)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#154360"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(Color(0.2, 0.6, 0.86, 0.25))
+    c.setLineWidth(1.5)
+    for row in range(int(bh/12)+1):
+        yy = by + row*12
+        for j in range(int(bw/8)):
+            c.line(bx+j*8, yy+2*math.sin(j*0.7), bx+(j+1)*8, yy+2*math.sin((j+1)*0.7))
+    draw_boat(c, x-25, y+2, 40, 16, GREEN)
+    draw_enemy_ship(c, x+25, y+2, 35, 14)
+    draw_rock(c, x, y-12, 12)
+    _draw_label_small(c, "FINALIS", bx+3, by+bh-8, 7, CREAM)
+    _draw_label_small(c, "Lv.7", bx+bw-18, by+bh-8, 7, GOLD)
 
 def draw_scene_controls(c, x, y):
-    draw_boat(c, x-30, y+20, 45, 18, BROWN)
-    draw_rock(c, x+30, y+5, 12)
-    draw_coin(c, x+10, y+35, 7)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#1a5276"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(Color(0.2, 0.6, 0.86, 0.25))
+    c.setLineWidth(1.5)
+    for row in range(int(bh/12)+1):
+        yy = by + row*12
+        for j in range(int(bw/8)):
+            c.line(bx+j*8, yy+2*math.sin(j*0.7), bx+(j+1)*8, yy+2*math.sin((j+1)*0.7))
+    draw_boat(c, x-25, y+2, 45, 18, BROWN)
+    draw_rock(c, x+35, y-12, 10)
+    draw_coin(c, x+15, y+15, 7)
     c.setFillColor(DARK)
-    c.setFont("Arial-Bold", 8)
-    c.drawCentredString(x, y-10, "[SPACE]")
+    c.setFont("Arial-Bold", 7)
+    c.drawString(x-55*mm, y+18, "[A/D]")
+    c.drawString(x+38, y+18, "[SPACE]")
+    _draw_label_small(c, "Controls", bx+3, by+bh-8, 7, CREAM)
 
 def draw_scene_scoring(c, x, y):
-    draw_coin(c, x-20, y+20, 10)
-    draw_coin(c, x, y+30, 8)
-    draw_coin(c, x+20, y+20, 10)
-    draw_enemy_ship(c, x-15, y, 25, 10)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#1b4f72"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(Color(0.2, 0.6, 0.86, 0.25))
+    c.setLineWidth(1.5)
+    for row in range(int(bh/12)+1):
+        yy = by + row*12
+        for j in range(int(bw/8)):
+            c.line(bx+j*8, yy+2*math.sin(j*0.7), bx+(j+1)*8, yy+2*math.sin((j+1)*0.7))
+    draw_coin(c, x-30, y+12, 9)
+    draw_coin(c, x-5, y+18, 7)
+    draw_coin(c, x+20, y+12, 9)
+    draw_enemy_ship(c, x+40, y-5, 30, 12)
+    draw_boat(c, x-40, y+2, 35, 14, GREEN)
     c.setFillColor(DARK)
-    c.setFont("Arial-Bold", 9)
-    c.drawCentredString(x, y-15, "+10   +25")
+    c.setFont("Arial-Bold", 8)
+    c.drawString(x-50*mm, y-8, "+10")
+    c.drawString(x+30, y-8, "+25")
+    _draw_label_small(c, "Scoring", bx+3, by+bh-8, 7, CREAM)
 
 def draw_scene_ram(c, x, y):
-    draw_boat(c, x-15, y+25, 40, 16, RED)
-    draw_boat(c, x+15, y+25, 40, 16, GREEN)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#154360"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(Color(0.2, 0.6, 0.86, 0.25))
+    c.setLineWidth(1.5)
+    for row in range(int(bh/12)+1):
+        yy = by + row*12
+        for j in range(int(bw/8)):
+            c.line(bx+j*8, yy+2*math.sin(j*0.7), bx+(j+1)*8, yy+2*math.sin((j+1)*0.7))
+    draw_boat(c, x-18, y+2, 40, 16, GREEN)
+    draw_enemy_ship(c, x+22, y+2, 35, 14)
+    c.setFillColor(Color(1, 0.4, 0, 0.35))
+    c.circle(x+5, y+4, 16, fill=1, stroke=0)
     c.setFillColor(ORANGE)
-    c.setFont("Arial-Bold", 14)
-    c.drawCentredString(x, y+40, "!")
+    c.setFont("Arial-Bold", 12)
+    c.drawCentredString(x+5, y+18, "!")
+    c.setFillColor(DARK)
+    c.setFont("Arial-Bold", 7)
+    c.drawString(x-55*mm, y+18, "[SPACE]")
+    _draw_label_small(c, "Rostrum!", bx+3, by+bh-8, 7, CREAM)
 
 def draw_scene_obstacles(c, x, y):
-    draw_rock(c, x-30, y+10, 15)
-    draw_rock(c, x+25, y+5, 10)
-    draw_enemy_ship(c, x+5, y+20, 30, 12)
-    draw_coin(c, x-10, y+35, 7)
-    draw_waves(c, x, y+20, 100)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#0e6655"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(Color(0.2, 0.6, 0.86, 0.25))
+    c.setLineWidth(1.5)
+    for row in range(int(bh/12)+1):
+        yy = by + row*12
+        for j in range(int(bw/8)):
+            c.line(bx+j*8, yy+2*math.sin(j*0.7), bx+(j+1)*8, yy+2*math.sin((j+1)*0.7))
+    draw_rock(c, x-35, y-8, 14)
+    draw_rock(c, x+25, y-12, 10)
+    draw_enemy_ship(c, x+5, y+2, 30, 12)
+    draw_coin(c, x-10, y+15, 7)
+    draw_boat(c, x+45, y+2, 35, 14, GREEN)
+    _draw_label_small(c, "Rocks | Enemies | Coins", bx+3, by+bh-8, 7, CREAM)
 
 def draw_scene_launch(c, x, y):
-    draw_boat(c, x, y+25, 50, 20, GREEN)
-    c.setFillColor(DARK)
-    c.setFont("Arial-Bold", 10)
-    c.drawCentredString(x, y-10, "roman-boats.html")
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#1a1a2e"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    draw_boat(c, x, y+2, 50, 20, GREEN)
+    c.setFillColor(CREAM)
+    c.setFont("Arial-Bold", 8)
+    c.drawCentredString(x, y-12, "roman-boats.html")
+    c.setFillColor(GOLD)
+    c.setFont("Arial-Bold", 7)
+    c.drawCentredString(x, y-20, "[ENTER]")
+    _draw_label_small(c, "Open in browser", bx+3, by+bh-8, 7, CREAM)
 
 def draw_scene_characters(c, x, y):
-    draw_roman_face(c, x-30, y+5, 18)
-    draw_roman_face(c, x, y+10, 22)
-    draw_roman_face(c, x+30, y+5, 18)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#1a1a2e"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(GOLD)
+    c.setLineWidth(0.5)
+    c.rect(bx, by, bw, bh, fill=0, stroke=1)
+    names = ["Sen", "Cen", "Leg", "Mer", "Gla", "Sla"]
+    for i, nm in enumerate(names):
+        px = bx + 15 + i * 22
+        py = y
+        draw_roman_face(c, px, py, 14)
+        c.setFillColor(CREAM)
+        c.setFont("Arial", 6)
+        c.drawCentredString(px, py-16, nm)
+    _draw_label_small(c, "6 character types", bx+3, by+bh-8, 7, GOLD)
 
 def draw_scene_fates(c, x, y):
-    draw_roman_face(c, x, y+15, 25)
-    draw_coin(c, x-20, y+40, 6)
-    draw_boat(c, x+20, y-5, 30, 12, GOLD)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#1a1a2e"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    draw_roman_face(c, x-30, y, 18)
+    draw_roman_face(c, x, y+3, 22)
+    draw_roman_face(c, x+30, y, 18)
+    draw_coin(c, x-15, y+25, 5)
+    draw_boat(c, x+20, y-15, 25, 10, GOLD)
+    _draw_label_small(c, "Stories & Destinies", bx+3, by+bh-8, 7, GOLD)
 
 def draw_scene_glossary(c, x, y):
-    c.setFillColor(DARK)
-    c.setFont("Arial-Bold", 10)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#1a1a2e"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setFillColor(GOLD)
+    c.setFont("Arial-Bold", 9)
     c.drawCentredString(x-30, y+15, "SPQR")
-    c.drawCentredString(x+30, y+15, "AVE")
-    draw_boat(c, x, y, 40, 14, BROWN)
+    c.drawCentredString(x, y+15, "AVE")
+    c.drawCentredString(x+30, y+15, "ROMA")
+    draw_boat(c, x, y-5, 40, 14, BROWN)
+    _draw_label_small(c, "Latin terms", bx+3, by+bh-8, 7, GOLD)
 
 def draw_scene_latin(c, x, y):
-    c.setFillColor(DARK)
-    c.setFont("Arial-Bold", 9)
-    c.drawCentredString(x-25, y+20, "VENI")
-    c.drawCentredString(x, y+20, "VIDI")
-    c.drawCentredString(x+25, y+20, "VICI")
-    draw_boat(c, x, y-5, 40, 14, RED)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#1a1a2e"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setFillColor(CREAM)
+    c.setFont("Arial-Bold", 10)
+    c.drawCentredString(x-35, y+12, "VENI")
+    c.drawCentredString(x, y+12, "VIDI")
+    c.drawCentredString(x+35, y+12, "VICI")
+    draw_boat(c, x, y-8, 40, 14, RED)
+    _draw_label_small(c, "Caesar's words", bx+3, by+bh-8, 7, GOLD)
 
 def draw_scene_strategies(c, x, y):
-    draw_boat(c, x-20, y+20, 35, 14, GREEN)
-    draw_enemy_ship(c, x+25, y+15, 28, 10)
-    draw_rock(c, x, y, 10)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#154360"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(Color(0.2, 0.6, 0.86, 0.25))
+    c.setLineWidth(1.5)
+    for row in range(int(bh/12)+1):
+        yy = by + row*12
+        for j in range(int(bw/8)):
+            c.line(bx+j*8, yy+2*math.sin(j*0.7), bx+(j+1)*8, yy+2*math.sin((j+1)*0.7))
+    draw_boat(c, x-20, y+5, 35, 14, GREEN)
+    draw_enemy_ship(c, x+25, y+2, 28, 10)
+    draw_rock(c, x, y-10, 10)
+    _draw_label_small(c, "Dodge > Ram at high levels", bx+3, by+bh-8, 7, CREAM)
 
 def draw_scene_achievements(c, x, y):
-    draw_coin(c, x-25, y+20, 10)
-    draw_coin(c, x, y+25, 8)
-    draw_coin(c, x+25, y+20, 10)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#1a1a2e"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    draw_coin(c, x-30, y+10, 10)
+    draw_coin(c, x, y+15, 8)
+    draw_coin(c, x+30, y+10, 10)
     c.setFillColor(GOLD)
     c.setFont("Arial-Bold", 8)
-    c.drawCentredString(x, y-5, "ACHIEVEMENTS")
+    c.drawCentredString(x, y-10, "FIRST RAM | 10 RAMS | UNDEFEATED")
+    _draw_label_small(c, "Unlock achievements", bx+3, by+bh-8, 7, GOLD)
 
 def draw_scene_conclusion(c, x, y):
-    draw_boat(c, x, y+25, 55, 22, GOLD)
-    draw_flag(c, x+15, y+40, 25, RED)
-    draw_waves(c, x, y+20, 100)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#0e6655"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(Color(0.2, 0.6, 0.86, 0.25))
+    c.setLineWidth(1.5)
+    for row in range(int(bh/12)+1):
+        yy = by + row*12
+        for j in range(int(bw/8)):
+            c.line(bx+j*8, yy+2*math.sin(j*0.7), bx+(j+1)*8, yy+2*math.sin((j+1)*0.7))
+    draw_boat(c, x, y+2, 55, 22, GOLD)
+    draw_flag(c, x+18, y+20, 22, RED)
+    _draw_label_small(c, "Ave, Captain!", bx+3, by+bh-8, 7, GOLD)
 
 def draw_scene_catalog(c, x, y):
-    draw_waves(c, x, y+20, 100)
-    draw_boat(c, x-35, y+25, 30, 12, GREEN)
-    draw_boat(c, x, y+25, 30, 12, BROWN)
-    draw_boat(c, x+35, y+25, 30, 12, SAND)
+    bx, by, bw, bh = x-70*mm, y-22*mm, 140*mm, 44*mm
+    c.setFillColor(HexColor("#1a5276"))
+    c.rect(bx, by, bw, bh, fill=1, stroke=0)
+    c.setStrokeColor(Color(0.2, 0.6, 0.86, 0.25))
+    c.setLineWidth(1.5)
+    for row in range(int(bh/12)+1):
+        yy = by + row*12
+        for j in range(int(bw/8)):
+            c.line(bx+j*8, yy+2*math.sin(j*0.7), bx+(j+1)*8, yy+2*math.sin((j+1)*0.7))
+    draw_boat(c, bx+15, y+2, 28, 11, GREEN)
+    draw_boat(c, bx+50, y+2, 28, 11, BROWN)
+    draw_boat(c, bx+85, y+2, 28, 11, SAND)
+    draw_rock(c, bx+30, y-12, 8)
+    draw_coin(c, bx+70, y+14, 6)
+    _draw_label_small(c, "All decorations x7 levels", bx+3, by+bh-8, 7, CREAM)
 
 # ============================================================
 # TEXT PAGE GENERATOR
@@ -415,7 +607,12 @@ def text_page(c, chapter_num, chapter_title, subtitle, paragraphs, page_illustra
             h = draw_text_block(c, para, 25*mm, y, size=11, max_width=W-50*mm, leading=15)
             y -= h + 4*mm
         if page_illustration:
-            page_illustration(c, W/2, y - 30*mm)
+            illust_y = y - 15*mm
+            illust_h = 55*mm
+            c.setStrokeColor(GOLD)
+            c.setLineWidth(1.5)
+            c.roundRect(20*mm, illust_y - illust_h, W-40*mm, illust_h, 4, fill=0, stroke=1)
+            page_illustration(c, W/2, illust_y - illust_h/2)
         c.setFont("Arial-Oblique", 9)
         c.setFillColor(GRAY)
         c.drawCentredString(W/2, 22*mm, f"Roman Galleys - Tome {chapter_num} - Page {i+2}")
